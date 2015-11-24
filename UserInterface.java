@@ -475,6 +475,7 @@ public class UserInterface {
 
 		while (true){//keeps trying until the user enters an acceptable input
 			try{
+				System.out.println("Enter Quantity:");
 				int temp = Integer.parseInt(usrIn.nextLine());//tries to read the user input as an integer and store in temp
 				if(temp <= max && temp >0){//check if temp in the range of 1 to max
 
@@ -482,7 +483,7 @@ public class UserInterface {
 				}
 				//print error and ask user to try again if temp is out of desired range
 				System.out.println("Above max or negative/zero quantity, please try again.");
-				System.out.println("Enter Quantity:");
+				
 				//dont need continue here as loop will automatically continue until a return statement is reached
 			}catch(Exception e){
 				//user enters a string or some other invalid input, print error message
