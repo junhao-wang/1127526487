@@ -294,14 +294,14 @@ public class UserInterface {
 			String[] rawData = this.activeUser.getContent();//gets shopping cart
 			for(String line: rawData){//iterates through items in shopping cart
 				String name = line.split(",")[1].trim();//name is the 2nd item in the csv line
-				int quant = Integer.parseInt(line.split(",")[3].trim());//parses the quanty from the 4th item in the line
+				int quant = Integer.parseInt(line.split(",")[3].trim());//parses the quantity from the 4th item in the line
 				int[] info = this.getPriceInfo(name);//calls the method that looks up the price, environmental tax(if any) and shipping fees(if any)
 				out = String.format("%-25s%-25s%-25s\n", name,String.valueOf(quant),String.valueOf(info[0]));//formats information into table form
 				System.out.println(out);
 				total += info[0];//adds price to total
-				envTax += info[1];//adds environmental tax (0 if none) to total environmental tax
-				shipping += info[2];//adds shipping (0 if none) to total shipping fees
-				tax += (info[0]*13);//adds 13% of price to total HST(divide by 100 at the end for precision issues with integers)
+				envTax += info[1]*quant;//adds environmental tax (0 if none) to total environmental tax
+				shipping += info[2]*quant;//adds shipping (0 if none) to total shipping fees
+				tax += (info[0]*13)*quant;//adds 13% of price to total HST(divide by 100 at the end for precision issues with integers)
 			}
 			tax = tax/100;//divides by 100 at the end
 			total += envTax+shipping+tax;//total now adds the environmental tax, shipping and HST for a grand total
