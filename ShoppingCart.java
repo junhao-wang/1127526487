@@ -87,28 +87,33 @@ public class ShoppingCart extends User{
 	}
 	//This function writes the shopping cart in its current state to the corresponding txt file
 	public void writeCart(){
-		String fileName = "Cart_"+this.getName()+".txt";
+		String fileName = "Cart_"+this.getName()+".txt";//computes the correct filename for the shopping cart of the user
 		try {
+			//initializes a printstream to write to this file
 			PrintStream out = new PrintStream(new File(fileName));
-			for (String line: this.content){
-				out.println(line);
+			for (String line: this.content){//iterates through item(represneted as a string) in the content arraylist
+				out.println(line);//writes the item to the shopping cart file
 			}
-			out.close();
-		} catch (FileNotFoundException e) {
+			out.close();//closes the print stream
+		} catch (FileNotFoundException e) {//this code block should not be reached unless an access error occurs
+		//i.e. insufficient permissions
 			e.printStackTrace();
 		}
 		
 	}
 	//=============Utility
+	//this function reads lines from a given file (denoted by a filename) , and dumps each line
+	//as an individual string to the given arraylist
 	public static void fileRead(ArrayList<String> dest,String filename){
 		try{
+			//initializes a scanner to scan through the file
 			Scanner input = new Scanner(new File(filename));
-			while (input.hasNextLine()){
-				dest.add(input.nextLine());
+			while (input.hasNextLine()){//while the file still has at least 1 remaining line
+				dest.add(input.nextLine());//reads the next line and adds it as a string to the arraylist
 			}
-			input.close();
-		}catch(FileNotFoundException e){
-			System.out.println("Required txt file missing: "+filename);
+			input.close();//close the scanner
+		}catch(FileNotFoundException e){//if the file cannot be found
+			System.out.println("Required txt file missing: "+filename);//print a missing file error
 		}
 	}
 	
