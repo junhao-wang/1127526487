@@ -312,75 +312,86 @@ public class UserInterface {
 			
 			
 			
-		}else{
-			System.out.println("ERROR IN NAVIGATION: PAGE NOT FOUND");
+		}else{//if a invalid page was requested
+			System.out.println("ERROR IN NAVIGATION: PAGE NOT FOUND");//print error message
 		}
 		
-		this.getCurrentPage();
+		this.getCurrentPage();//calls the logic/user interaction function for the page after page change
 	}
 	
-	public void getReadables(){
-		parseObjects(this.readables, "Books.txt");
-		parseObjects(this.readables, "eBooks.txt");
+	public void getReadables(){//this function loads Books and eBooks from the txt into the Readables Array
+		parseObjects(this.readables, "Books.txt");//load Books
+		parseObjects(this.readables, "eBooks.txt");//load eBooks
 	}
 	
-	public void getAudioProducts(){
-		parseObjects(this.audioProducts, "CDs.txt");
-		parseObjects(this.audioProducts, "MP3.txt");
+	public void getAudioProducts(){//this function loads CDs and MP3 from the txt into the Audio Array
+		parseObjects(this.audioProducts, "CDs.txt");//load CDs
+		parseObjects(this.audioProducts, "MP3.txt");//load MP3
 	}
-	public void showReadables(){
-		System.out.printf("%-7s%-30s%-14s%-8s%-20s%-10s\n","S.No","Name of the Book","Author","Price($)","Quantity in Store","Type");
-		for (Readable itm: this.readables){
+	public void showReadables(){//Prints out all readables in a nice table
+		System.out.printf("%-7s%-30s%-14s%-8s%-20s%-10s\n","S.No","Name of the Book","Author","Price($)","Quantity in Store","Type");//formatter for headings
+		for (Readable itm: this.readables){//goes through each item in readables
+			//formats and prints the neccessary information in their respective places by first calling the method to get the information
 			String s = String.format("%-7s%-30s%-14s%-8s%-20s%-10s\n", String.valueOf(itm.getsNo()),itm.getName(),itm.getAuthor(),String.valueOf(itm.getPrice()),String.valueOf(itm.getQuantity()),itm.getType());
 			System.out.println(s);
 		}
 		System.out.println();
 	}
-	public void showAudioProducts(){
+	public void showAudioProducts(){//Prints out all audio items in a nice table
+		//formatter for header
 		System.out.printf("%-7s%-30s%-14s%-8s%-20s%-10s\n","S.No","Name ","Artist","Price($)","Quantity in Store","Type");
 		for (Audio itm: this.audioProducts){
+			//formats and prints the neccessary information in their respective places by first calling the method to get the information
 			String s = String.format("%-7s%-30s%-14s%-8s%-20s%-10s\n", String.valueOf(itm.getsNo()),itm.getName(),itm.getArtist(),String.valueOf(itm.getPrice()),String.valueOf(itm.getQuantity()),itm.getType());
 			System.out.println(s);
 		}
 		System.out.println();
 	}
+	//finds an audio item given the serial number
 	public Audio findAudio(int sNo){
-		for (Audio a:this.audioProducts){
-			if (a.getsNo() == sNo){
-				return a;
+		for (Audio a:this.audioProducts){//iterates through the audioProducts array
+			if (a.getsNo() == sNo){//if serial numbers match
+				return a;//return the item
 			}
 		}
-		return null;
-	}
+		return null;//if not found, return null
+	}//finds a readable item given the serial number
 	public Readable findReadable(int sNo){
-		for (Readable r:this.readables){
-			if (r.getsNo() == sNo){
-				return r;
+		for (Readable r:this.readables){//iterates through the readables array
+			if (r.getsNo() == sNo){//if serial numbers match
+				return r;return the item
 			}
 		}
-		return null;
+		return null;//if not found, return null pointer
 	}
+	//writes the readable array into the correspoinding files
 	public void writeReadable(){
 		try {
+			//opens a PrintStream for each of the files
 			PrintStream bk = new PrintStream(new File("Books.txt"));
 			PrintStream ebk = new PrintStream(new File("eBooks.txt"));
-			for (Readable r:this.readables){
-				if (r.getType().equals("Book")){
-					bk.println(r.getInfo());
-				}else{
-					ebk.println(r.getInfo());
+			
+			for (Readable r:this.readables){//iterates through the readables
+				if (r.getType().equals("Book")){//if type is book
+					bk.println(r.getInfo());//write into the Book.txt file
+				}else{//otherwise it must be an eBook
+					ebk.println(r.getInfo());//write into the eBook.txt file
 				}
 			}
+			//closes the PrintStreams
 			bk.close();
 			ebk.close();
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) {//This block should not be reached unless an access error has occured
 			e.printStackTrace();
 		}
 	}
+	//writes the dusioProduct array into the correspoinding files
 	public void writeAudio(){
 		try {
+			//opens a PrintStream for each of the files
 			PrintStream cd = new PrintStream(new File("CDs.txt"));
 			PrintStream mp3 = new PrintStream(new File("MP3.txt"));
+			
 			for (Audio a:this.audioProducts){
 				if (a.getType().equals("CD")){
 					cd.println(a.getInfo());
