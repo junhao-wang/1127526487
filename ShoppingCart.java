@@ -26,6 +26,7 @@ public class ShoppingCart extends User{
 				e.printStackTrace();
 			}
 		}
+		this.content = new ArrayList<String>();//initialize content
 		fileRead(this.content,fileName);//read the content of the shopping cart file into the content array	
 	}
 	//constructor for regular users
@@ -41,6 +42,7 @@ public class ShoppingCart extends User{
 				e.printStackTrace();
 			}
 		}
+		this.content = new ArrayList<String>();//initialize content
 		//at this point the shopping cart file must exist by now, if it wasnt before, the last code block created it
 		fileRead(this.content,fileName);//reads the shopping cart file to the content arraylist
 	}
