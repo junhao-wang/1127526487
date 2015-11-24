@@ -157,45 +157,48 @@ public class UserInterface {
 					System.out.println("Please press enter to continue");//ask to continue
 					usrIn.nextLine();//waits for user to hit enter
 					this.changeCurrentPage(9);//refreshes current page
-				}else{//otherwise
-					int q = getQuant(temp.getQuantity(),this.usrIn);
-					temp.subQuant(q);
-					this.writeAudio();
-					this.activeUser.addItem(temp, q);
-					System.out.println(String.valueOf(q)+" "+temp.getName()+" successfully added to your cart.");
-					System.out.println("Enter -2 to continue shopping or 0 to checkout.");
-					int[] op2 = {-2,0};
-					choice = getInt(op2,this.usrIn);
-					if (choice == -2){
-						this.changeCurrentPage(6);
-					}else{
-						this.changeCurrentPage(10);
+				}else{//otherwise if item is available
+					int q = getQuant(temp.getQuantity(),this.usrIn);//prompts user for an input in range (1 to quantity)
+					temp.subQuant(q);//subtracts the ammount from the item in the audio arrray
+					this.writeAudio();//writes the audio array
+					this.activeUser.addItem(temp, q);//adds the item to the user's shopping cart
+					System.out.println(String.valueOf(q)+" "+temp.getName()+" successfully added to your cart.");//success message
+					System.out.println("Enter -2 to continue shopping or 0 to checkout.");//prompts user for further action
+					int[] op2 = {-2,0};//setup valid options
+					choice = getInt(op2,this.usrIn);//query user for input
+					if (choice == -2){//if user choose -2
+						this.changeCurrentPage(6);//go back to page 6
+					}else{//if user choose 0
+						this.changeCurrentPage(10);//go to checkout
 					}
 				}
 			}
-		}else if(this.currentPage == 10){
-			boolean buy = yesNo("Would you like to buy? [Yes/No]: ",this.usrIn);
-			if (buy){
-				int s;
+		}else if(this.currentPage == 10){//logic for page 10 (checkout page)
+			boolean buy = yesNo("Would you like to buy? [Yes/No]: ",this.usrIn);//prompts user for confirmation on buying
+			if (buy){//if they want to buy
+				int s;//used to produce the confirmation number
 				try{
-					Scanner temp = new Scanner(new File("cnum.txt"));
-					s = temp.nextInt();
-					temp.close();
-					PrintStream out = new PrintStream(new File("cnum.txt"));
-					out.println(String.valueOf(s+1));
-					out.close();
-				}catch(Exception e){
-					s = 100;
-					try {
-						PrintStream out = new PrintStream(new File("cnum.txt"));
-						out.println(String.valueOf(s+1));
-						out.close();
-					} catch (FileNotFoundException e1) {
+					Scanner temp = new Scanner(new File("cnum.txt"));//throws FileNotFoundException if there is no such file
+					s = temp.nextInt();//scans the file for the confirmation number to use
+					temp.close();//close the scanner
+					PrintStream out = new PrintStream(new File("cnum.txt"));//opens the file for writing this time
+					out.println(String.valueOf(s+1));//writes the next integer
+					out.close();//close the PrintStream and File
+				}catch(Exception e){//if there is no file cnum.txt
+					s = 1000;//this must be the first order, thus confirmation is U1000
+					try {//need this try catch block for the printstream
+						PrintStream out = new PrintStream(new File("cnum.txt"));//make a new cnum.txt
+						out.println(String.valueOf(s+1));//write in 1001
+						out.close();//close PrintStream and File
+					} catch (FileNotFoundException e1) {//This block should not normally be reached
+					//unless cnum.txt already exists and we cannot overwrite it
 					}
 					
 				}
-				System.out.println("Confirmation ID: U"+String.valueOf(s));
-				System.out.println("Items shipped to: "+this.activeUser.getName());
+				System.out.println("Confirmation ID: U"+String.valueOf(s));//print onfirmation number
+				System.out.println("Items shipped to: "+this.activeUser.getName());//prints item shipped to : [username]
+				System.out.println("Please press enter to continue");//ask to continue
+				usrIn.nextLine();//waits for user to hit enter
 			}else{
 				boolean clear = yesNo("Would you like to return the items in your shopping cart? [Yes/No]: ",this.usrIn);
 				if(clear){
