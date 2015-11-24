@@ -1,3 +1,10 @@
+/*
+*Name: Junhao Wang, Colin Vandenhof, Teshaun Murray
+*MacID: wangjh2, vandencm, murrayts
+*Student Number: 1215428, 1231644, 1227515
+*Description:
+*/
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
