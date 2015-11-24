@@ -433,120 +433,125 @@ public class UserInterface {
 		}
 		return results;//returns the 3 element int array containing price, env tax and shipping
 	}
-	
+	//this function returns an item to the arrays deadables or audioProduct from the shoping cart
 	public void retItm(String name,int quant){
-		for (Readable r: this.readables){
-			if (r.getName().equals(name)){
-				r.subQuant(quant*-1);
+		for (Readable r: this.readables){//looks through items in readables
+			if (r.getName().equals(name)){//if the item name matches
+				r.subQuant(quant*-1);//add the quantity back (subtracting the negative of the quantity is the same as adding)
 			}
 		}
-		for (Audio a: this.audioProducts){
+		for (Audio a: this.audioProducts){//same thing done with items in audio products
 			if (a.getName().equals(name)){
 				a.subQuant(quant*-1);
 			}
 		}
 	}
 	//============================UTILITY======================================
+	//Query the user for a simple yes or no reply
 	public static boolean yesNo(String prompt,Scanner usrIn){
 ;
-		while (true){
-			System.out.println(prompt);
-			String s = usrIn.nextLine();
-			if (s.equalsIgnoreCase("yes")){
+		while (true){//lopps it over and over until a valid response is give
+			System.out.println(prompt);//print out the question that is to be asked
+			String s = usrIn.nextLine();//stores the user input in s
+			if (s.equalsIgnoreCase("yes")){//if the user said yes (ignores case)
 				return true;
-			}else if (s.equalsIgnoreCase("no")){
+			}else if (s.equalsIgnoreCase("no")){//if the user said no (again, ignores case)
 				return false;
-			}else{
-				System.out.println("Invalid input, try again.");
-				continue;
+			}else{//if the user enters an invalid response
+				System.out.println("Invalid input, try again.");//print error message
+				continue;//start over again
 			}
 		}
 	}
+	//Query the user for an integer between 1 and max
 	public static int getQuant(int max,Scanner usrIn){
 
-		while (true){
+		while (true){//keeps trying until the user enters an acceptable input
 			try{
-				int temp = Integer.parseInt(usrIn.nextLine());
-				if(temp <= max && temp >0){
+				int temp = Integer.parseInt(usrIn.nextLine());//tries to read the user input as an integer and store in temp
+				if(temp <= max && temp >0){//check if temp in the range of 1 to max
 
-					return temp;
+					return temp;//return temp if it is valid
 				}
+				//print error and ask user to try again if temp is out of desired range
 				System.out.println("Above max or negative/zero quantity, please try again.");
 				System.out.println("Enter Quantity:");
-				
+				//dont need continue here as loop will automatically continue until a return statement is reached
 			}catch(Exception e){
+				//user enters a string or some other invalid input, print error message
 				System.out.println("Invalid input, please try again.");
-				System.out.println("Enter Quantity:");
-				continue;
+				System.out.println("Enter Quantity:");//reprint the prompt
+				continue;//start over again
 			}
 		}
 	}
-	
+	//Query the user for an input that should match one of the options in options
 	public static int getInt(int[] options,Scanner usrIn){
-		while (true){
+		while (true){//loop that keeps trying until a return statement is reached
 			try{
-				int temp = Integer.parseInt(usrIn.nextLine());
-				for(int i:options){
-					if (i==temp){
-						return temp;
+				int temp = Integer.parseInt(usrIn.nextLine());//try to read the next user input as an integer
+				for(int i:options){//iterates through the integers in options
+					if (i==temp){//if the integer entered is in the options
+						return temp;//return what the user entered
 					}
 				}
+				//if it is not within the available options, print an error
 				System.out.println("That is not one of the options,try again.");
-				System.out.println("Choose your option:");
-				
-			}catch(Exception e){
-				System.out.println("Invalid input, please try again.");
-				System.out.println("Choose your option:");
-				continue;
+				System.out.println("Choose your option:");//reprint prompt
+				//and the loop continues, getting the user to input a valid option again
+			}catch(Exception e){//if the user enters something that is not an integer
+				System.out.println("Invalid input, please try again.");//print error
+				System.out.println("Choose your option:");//reprint prompt
+				continue;//start over again
 			}
 		}
 		
 	}
 	
 	
-	
+	//this function reads Items from a file and creates an object according to its type, then stores them in an arrayList that is returned
 	public static void parseObjects(ArrayList dest, String filename){
-		ArrayList<String> src = new ArrayList<String>();
-		fileRead(src,filename);	
+		ArrayList<String> src = new ArrayList<String>();//creates an empty array list to hold the strings from reading the file
+		fileRead(src,filename);	//dumps the content of the file [filename] into the arraylist src function call
 		
-		for(String line: src){
-			String[] dat = line.split(",");
-			int sNo = Integer.parseInt(dat[0].trim());
-			String name = dat[1].trim();
-			String field3 = dat[2].trim();
-			int price = Integer.parseInt(dat[3].trim());
-			int quant = Integer.parseInt(dat[4].trim());
-			if(filename.equals("Books.txt")){
-				Book temp = new Book(sNo,name,field3,price,quant);
-				dest.add(temp);
-			}else if(filename.equals("eBooks.txt")){
-				eBook temp = new eBook(sNo,name,field3,price,quant);
-				dest.add(temp);
-			}else if(filename.equals("CDs.txt")){
-				CD temp = new CD(sNo,name,field3,price,quant);
-				dest.add(temp);
-			}else if(filename.equals("MP3.txt")){
-				MP3 temp = new MP3(sNo,name,field3,price,quant);
-				dest.add(temp);
+		for(String line: src){//iterates through the strings stored in src
+			String[] dat = line.split(",");//splits the comma seperated value line into individual string fields
+			int sNo = Integer.parseInt(dat[0].trim());//parse the serial number as an integer
+			String name = dat[1].trim();//stores the name as a string
+			String field3 = dat[2].trim();//stores either the author or artist name as a string
+			int price = Integer.parseInt(dat[3].trim());//Parse the price as an integer
+			int quant = Integer.parseInt(dat[4].trim());//parse the quantity as an integer
+			if(filename.equals("Books.txt")){//if the items came from Books.txt
+				Book temp = new Book(sNo,name,field3,price,quant);//make a new Book object
+				dest.add(temp);//add the object to the array
+			}else if(filename.equals("eBooks.txt")){//if the items came from eBooks.txt
+				eBook temp = new eBook(sNo,name,field3,price,quant);//make a new eBook object
+				dest.add(temp);//add the object to the array
+			}else if(filename.equals("CDs.txt")){//if the items came from CDs.txt
+				CD temp = new CD(sNo,name,field3,price,quant);//make a new CD object
+				dest.add(temp);//add the object to the array
+			}else if(filename.equals("MP3.txt")){//if the items came from MP3.txt
+				MP3 temp = new MP3(sNo,name,field3,price,quant);//make a new MP3 object
+				dest.add(temp);//add the object to the array
 			}
 		}
 	}
-	
+	//this function reads a file and dumps out its contents into an arraylist of Strings (1 string per line in the file)
 	public static void fileRead(ArrayList<String> dest,String filename){
 		try{
-			Scanner input = new Scanner(new File(filename));
-			while (input.hasNextLine()){
-				dest.add(input.nextLine());
+			Scanner input = new Scanner(new File(filename));//make a scanner to read the file
+			while (input.hasNextLine()){//while the file still has a next line
+				dest.add(input.nextLine());//read the line as a string and add it to the destination arraylist
 			}
-			input.close();
-		}catch(FileNotFoundException e){
-			System.out.println("Required txt file missing: "+filename);
+			input.close();//close the scanner at the end
+		}catch(FileNotFoundException e){//if the file cannot be found
+			System.out.println("Required txt file missing: "+filename);//print error message along with the missing filename
 		}
 	}
-	
+	//This function prints out a whole bunch of newline characters to "clear the page"
 	public static void clearPage(){
-		for (int i = 1; i<= 30;i++){
-			System.out.println();
+		for (int i = 1; i<= 30;i++){//do this 30 times
+			System.out.println();//print a newline character
 		}
 	}
 }
