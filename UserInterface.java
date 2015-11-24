@@ -68,7 +68,7 @@ public class UserInterface {
 			while(!User.findUser(inp).equals("")){//if the user exists
 				System.out.println("That username is already taken. Please try again,");//print error
 				System.out.println("Choose your username:");//ask again
-				inp = this.usrIn.nextLine();//sotre user input in inp
+				inp = this.usrIn.nextLine();//store user input in inp
 			}
 			this.activeUser = new ShoppingCart(inp);//makes a shopping cart for the user
 			this.activeUser.writeUser();//writes the new user to Users.txt
@@ -366,7 +366,7 @@ public class UserInterface {
 	public Readable findReadable(int sNo){
 		for (Readable r:this.readables){//iterates through the readables array
 			if (r.getsNo() == sNo){//if serial numbers match
-				return r;return the item
+				return r;//return the item
 			}
 		}
 		return null;//if not found, return null pointer
