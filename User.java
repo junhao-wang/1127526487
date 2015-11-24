@@ -27,7 +27,7 @@ public class User {
 			while(input.hasNextLine()){
 				String temp = input.nextLine();
 				String test = temp.split(",")[0];
-				if(test.equals(usrnm)){
+				if(test.equalsIgnoreCase(usrnm)){
 					input.close();
 					return temp;
 				}
@@ -52,7 +52,7 @@ public class User {
 			input.close();
 			boolean found = false;
 			for (int i = 0; i< data.size();i++){
-				if (data.get(i).split(",")[0].equals(this.username)){
+				if (data.get(i).split(",")[0].equalsIgnoreCase(this.username)){
 					data.set(i, (this.username+","+this.password));
 					found = true;
 				}
