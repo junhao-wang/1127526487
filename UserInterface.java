@@ -240,7 +240,7 @@ public class UserInterface {
 		}else if(this.currentPage == 2){
 			System.out.println("Choose your username:");
 		}else if(this.currentPage == 3){
-			System.out.println("Welcome "+activeUser.getName());
+			System.out.println("Welcome "+activeUser.getName());//gets the username field of the current user
 			System.out.println("Press Enter to Continue");			
 		}else if(this.currentPage == 4){
 			System.out.println("No Access");
@@ -267,45 +267,46 @@ public class UserInterface {
 		}else if(this.currentPage == 8){
 			System.out.println("Readables: ");
 			System.out.println();
-			this.showReadables();
+			this.showReadables(); //calls the formatting method to print out readables in a table
 			System.out.println("Choose your option:");
 			System.out.println("Enter -1 to return to previous menu");
 		}else if(this.currentPage == 9){
 			System.out.println("Audio: ");
 			System.out.println();
-			this.showAudioProducts();
+			this.showAudioProducts();//calls the formatting method to print out audio items in a table
 			System.out.println("Choose your option:");
 			System.out.println("Enter -1 to return to previous menu");
-		}else if(this.currentPage == 10){
+		}else if(this.currentPage == 10){//some calculations are done here for this page
 			System.out.println("Billing Information: ");
-			int total = 0;
-			int envTax = 0;
-			int tax = 0;
-			int shipping = 0;
-			String out = String.format("%-25s%-25s%-25s\n", "Name","Quantity","Price");
-			System.out.println(out);
-			String[] rawData = this.activeUser.getContent();
-			for(String line: rawData){
-				String name = line.split(",")[1].trim();
-				int quant = Integer.parseInt(line.split(",")[3].trim());
-				int[] info = this.getPriceInfo(name);
-				out = String.format("%-25s%-25s%-25s\n", name,String.valueOf(quant),String.valueOf(info[0]));
+			int total = 0;//variable for the total shown at the bottom
+			int envTax = 0;//variable for total environmental tax paid
+			int tax = 0;//variable for the HST paid
+			int shipping = 0;//variable for shipping
+			String out = String.format("%-25s%-25s%-25s\n", "Name","Quantity","Price");//formatter for headings
+			System.out.println(out);//prints the string
+			String[] rawData = this.activeUser.getContent();//gets shopping cart
+			for(String line: rawData){//iterates through items in shopping cart
+				String name = line.split(",")[1].trim();//name is the 2nd item in the csv line
+				int quant = Integer.parseInt(line.split(",")[3].trim());//parses the quanty from the 4th item in the line
+				int[] info = this.getPriceInfo(name);//calls the method that looks up the price, environmental tax(if any) and shipping fees(if any)
+				out = String.format("%-25s%-25s%-25s\n", name,String.valueOf(quant),String.valueOf(info[0]));//formats information into table form
 				System.out.println(out);
-				total += info[0];
-				envTax += info[1];
-				shipping += info[2];
-				tax += (info[0]*13)/100;	
+				total += info[0];//adds price to total
+				envTax += info[1];//adds environmental tax (0 if none) to total environmental tax
+				shipping += info[2];//adds shipping (0 if none) to total shipping fees
+				tax += (info[0]*13);//adds 13% of price to total HST(divide by 100 at the end for precision issues with integers)
 			}
-			total += envTax+shipping+tax;
-			out = String.format("%-30s%-10s%-40s\n", "Environment Tax","2%",String.valueOf(envTax));
+			tax = tax/100;//divides by 100 at the end
+			total += envTax+shipping+tax;//total now adds the environmental tax, shipping and HST for a grand total
+			out = String.format("%-30s%-10s%-40s\n", "Environment Tax","2%",String.valueOf(envTax));//prints environmental tax
 			System.out.println(out);
-			out = String.format("%-30s%-10s%-40s\n", "HST","13%",String.valueOf(tax));
+			out = String.format("%-30s%-10s%-40s\n", "HST","13%",String.valueOf(tax));//prints HST
 			System.out.println(out);
-			out = String.format("%-30s%-10s%-40s\n", "Shipping","10%",String.valueOf(shipping));
+			out = String.format("%-30s%-10s%-40s\n", "Shipping","10%",String.valueOf(shipping));//prints shipping fees
 			System.out.println(out);
-			out = String.format("%-40s%-40s\n", " ","------------");
+			out = String.format("%-40s%-40s\n", " ","------------");//line above total
 			System.out.println(out);
-			out = String.format("%-40s%-40s\n", "Total%",String.valueOf(total));
+			out = String.format("%-40s%-40s\n", "Total%",String.valueOf(total));//prints total
 			System.out.println(out);
 			
 			
