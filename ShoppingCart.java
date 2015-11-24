@@ -47,8 +47,8 @@ public class ShoppingCart extends User{
 	
 	//returns the static array representation of the contents of the shopping cart
 	public String[] getContent(){
-		if (this.content.size() == 0){
-			String[] s = {};
+		if (this.content.size() == 0){//safety for empty arrays
+			String[] s = {};//return empty string array
 			return s;
 		}
 		return this.content.toArray(new String[this.content.size()]);//converts the content arraylist to a string[] array
