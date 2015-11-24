@@ -204,8 +204,10 @@ public class UserInterface {
 				}
 				System.out.println("Confirmation ID: U"+String.valueOf(s));//print onfirmation number
 				System.out.println("Items shipped to: "+this.activeUser.getName());//prints item shipped to : [username]
+				this.activeUser.clearCart();//clears the user's cart
 				System.out.println("Please press enter to continue");//ask to continue
 				usrIn.nextLine();//waits for user to hit enter
+				System.exit(0);
 			}else{//if the user said no to buying the items in cart
 				//ask if they would like to clear the cart
 				boolean clear = yesNo("Would you like to return the items in your shopping cart? [Yes/No]: ",this.usrIn);
