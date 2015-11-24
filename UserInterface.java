@@ -95,42 +95,44 @@ public class UserInterface {
 			}else{//otherwise the user must have choosen option -1
 				this.changeCurrentPage(5);//go back to previous menu (page 5)
 			}
-		}else if(this.currentPage == 7){
-			usrIn.nextLine();
-			this.changeCurrentPage(5);
+		}else if(this.currentPage == 7){//page 7 shopping cart logic
+			usrIn.nextLine();//wait for enter before going back to page 5
+			this.changeCurrentPage(5);//goes back to page 5
 			
-		}else if(this.currentPage == 8){
-			ArrayList<Integer> optemp = new ArrayList<Integer>();
-			for (Readable r: this.readables){
-				optemp.add(r.sNo);
+		}else if(this.currentPage == 8){//page 8 readables logic
+			ArrayList<Integer> optemp = new ArrayList<Integer>();//Dynamic ArrayList for available options
+			for (Readable r: this.readables){//iterates through all readables
+				optemp.add(r.sNo);//adds their serial number (sNo) to the dynamic array of available options
 				
 			}
-			int[] op = new int[optemp.size()+1];
-			op[optemp.size()] = -1;
-			for(int i = 0;i<optemp.size();i++){
-				op[i] = optemp.get(i);
+			int[] op = new int[optemp.size()+1];//makes a static array from the dynamic ArrayList for compatibility with getInt(Int[] i)
+			op[optemp.size()] = -1;//set the last option to be -1 (note that the statuc array is 1 element bigger than the dynamic array)
+			for(int i = 0;i<optemp.size();i++){//iterates through the dynamic array with an index variable
+				op[i] = optemp.get(i);//assigns serial numbers to static array via indices
 			}
-			choice = getInt(op,this.usrIn);
-			if(choice == -1){
-				this.changeCurrentPage(6);
-			}else{
-				Readable temp = this.findReadable(choice);
-				if (temp.getQuantity() == 0){
-					System.out.println("Item out of Stock.Please Try a different item.");
-					this.changeCurrentPage(8);
+			choice = getInt(op,this.usrIn);//queries user to make a valid choice
+			if(choice == -1){//if user chooser to go back
+				this.changeCurrentPage(6);//goes back to page 6
+			}else{//otherwise
+				Readable temp = this.findReadable(choice);//lookup the item the user has choosen via sNo and store it in temp
+				if (temp.getQuantity() == 0){//if the quantity is already at 0
+					System.out.println("Item out of Stock.Please Try a different item.");//print error
+					System.out.println("Please press enter to continue");//ask to continue
+					usrIn.nextLine();//waits for user to hit enter
+					this.changeCurrentPage(8);//refreshes the page
 				}else{
-					int q = getQuant(temp.getQuantity(),this.usrIn);
-					temp.subQuant(q);
-					this.writeReadable();
-					this.activeUser.addItem(temp, q);
-					System.out.println(String.valueOf(q)+" "+temp.getName()+" successfully added to your cart.");
-					System.out.println("Enter -2 to continue shopping or 0 to checkout.");
-					int[] op2 = {-2,0};
-					choice = getInt(op2,this.usrIn);
-					if (choice == -2){
-						this.changeCurrentPage(6);
-					}else{
-						this.changeCurrentPage(10);
+					int q = getQuant(temp.getQuantity(),this.usrIn);//queries user for a valid input in a given range
+					temp.subQuant(q);//subtracts the specified ammount from the item in the readables array
+					this.writeReadable();//saves the readable array to the files Book.txt and eBook.txt
+					this.activeUser.addItem(temp, q);//adds the items to the cart of the user
+					System.out.println(String.valueOf(q)+" "+temp.getName()+" successfully added to your cart.");//success message
+					System.out.println("Enter -2 to continue shopping or 0 to checkout.");//prompt for next step
+					int[] op2 = {-2,0};//setup array with valid options
+					choice = getInt(op2,this.usrIn);//Query the user
+					if (choice == -2){//if choice is -2
+						this.changeCurrentPage(6);//go back to page 6
+					}else{//if choice is 0
+						this.changeCurrentPage(10);//procceed to checkout
 					}
 				}
 			}
