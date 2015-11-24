@@ -414,24 +414,24 @@ public class UserInterface {
 	public int[] getPriceInfo(String name){
 		int[] results = {0,0,0};//3 slot for the return, 0 is price, 1 is environmental tax,2 is shipping
 		for (Readable r: this.readables){//iterates through readables
-			if (r.getName().equals(name)){
-				results[0] = r.getPrice();
-				if (r.getType().equals("Book")){
-					results[1] = results[0]/50;
-					results[2] = results[0]/10;
+			if (r.getName().equals(name)){//if the name matches
+				results[0] = r.getPrice();//set element 0 to the price
+				if (r.getType().equals("Book")){//if the item is a book
+					results[1] = results[0]/50;//calculate env tax
+					results[2] = results[0]/10;//calculate shipping
 				}
 			}
 		}
-		for (Audio a: this.audioProducts){
-			if (a.getName().equals(name)){
-				results[0] = a.getPrice();
-				if (a.getType().equals("CD")){
-					results[1] = results[0]/50;
-					results[2] = results[0]/10;
+		for (Audio a: this.audioProducts){//iterates through audio
+			if (a.getName().equals(name)){//if the name matches
+				results[0] = a.getPrice();//set element 0 to be the price
+				if (a.getType().equals("CD")){//if the type is CD
+					results[1] = results[0]/50;//apply environmental tax
+					results[2] = results[0]/10;//apply shipping fee
 				}
 			}
 		}
-		return results;
+		return results;//returns the 3 element int array containing price, env tax and shipping
 	}
 	
 	public void retItm(String name,int quant){
