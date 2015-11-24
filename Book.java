@@ -2,7 +2,7 @@
 *Name: Junhao Wang, Colin Vandenhof, Teshaun Murray
 *MacID: wangjh2, vandencm, murrayts
 *Student Number: 1215428, 1231644, 1227515
-*Description:
+*Description:Book class has methods to return price and readable type.
 */
 
 public class Book extends Readable{ //class Book is a subclass of Readable

@@ -2,7 +2,7 @@
 *Name: Junhao Wang, Colin Vandenhof, Teshaun Murray
 *MacID: wangjh2, vandencm, murrayts
 *Student Number: 1215428, 1231644, 1227515
-*Description: User class is used to store new users to file, and retrive information about current users
+*Description: User class is used to store new users to file, and retrieve information about existing users
 */
 
 import java.io.*;
