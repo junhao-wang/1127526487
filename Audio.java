@@ -2,6 +2,9 @@
 public class Audio extends Item {
 	protected String artistName;
 	public Audio(int sNo,String name,String artistName,int price,int quantity ){
+		/*
+		Initialize variables
+		*/
 		this.sNo = sNo;
 		this.price = price;
 		this.artistName = artistName;
@@ -10,41 +13,44 @@ public class Audio extends Item {
 	}
 	
 	public int getPrice() {
-		// TODO Auto-generated method stub
+		//returns price
 		return this.price;
 	}
 	@Override
 	public int getQuantity() {
-		// TODO Auto-generated method stub
+		//returns quantity
 		return this.quantity;
 	}
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
+		//returns name
 		return this.name;
 	}
 	@Override
 	public int getsNo() {
-		// TODO Auto-generated method stub
+		// returns serial number
 		return this.sNo;
 	}
 	public String getArtist(){
+		//returns the artistname
 		return this.artistName;
 	}
 
 	@Override
 	public String getInfo() {
+		//outputs the string "sNo,name,artistName,price,quantity"
 		String s = String.valueOf(this.sNo) +","+this.name+","+this.artistName+","+String.valueOf(this.price)+","+String.valueOf(this.quantity);
 		return s;
 	}
 
 	@Override
 	public String getType() {
-		// TODO Auto-generated method stub
+		// This method is meant to be overriden by Book and eBook class
 		return null;
 	}
 
 	public void subQuant(int x){
+		//Changes the quantity
 		this.quantity = this.quantity - x;
 	}
 
