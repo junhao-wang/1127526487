@@ -137,25 +137,27 @@ public class UserInterface {
 				}
 			}
 			
-		}else if(this.currentPage == 9){
-			ArrayList<Integer> optemp = new ArrayList<Integer>();
-			for (Audio r: this.audioProducts){
-				optemp.add(r.getsNo());
+		}else if(this.currentPage == 9){//audio page
+			ArrayList<Integer> optemp = new ArrayList<Integer>();//Dynamic ArrayList for available options
+			for (Audio r: this.audioProducts){//iterates through audio products
+				optemp.add(r.getsNo());//adds the serial to the arraylist of available options
 			}
-			int[] op = new int[optemp.size()+1];
-			op[optemp.size()] = -1;
-			for(int i = 0;i<optemp.size();i++){
-				op[i] = optemp.get(i);
+			int[] op = new int[optemp.size()+1];//make a static array with one more spot (for -1 option)
+			op[optemp.size()] = -1;//adds the -1 option
+			for(int i = 0;i<optemp.size();i++){//iterates through dynamic array with index
+				op[i] = optemp.get(i);//assigns serial numbers from dynamic array to static array with indicies
 			}
-			choice = getInt(op,this.usrIn);
-			if(choice == -1){
-				this.changeCurrentPage(6);
-			}else{
-				Audio temp = this.findAudio(choice);
-				if (temp.getQuantity() == 0){
-					System.out.println("Item out of Stock.Please Try a different item.");
-					this.changeCurrentPage(8);
-				}else{
+			choice = getInt(op,this.usrIn);//query user for valid input
+			if(choice == -1){//if the choice is -1
+				this.changeCurrentPage(6);//go back to page 6
+			}else{//otherwise
+				Audio temp = this.findAudio(choice);//find the audio item the user has specified and store in temp
+				if (temp.getQuantity() == 0){//if item is sold out
+					System.out.println("Item out of Stock.Please Try a different item.");//print error
+					System.out.println("Please press enter to continue");//ask to continue
+					usrIn.nextLine();//waits for user to hit enter
+					this.changeCurrentPage(9);//refreshes current page
+				}else{//otherwise
 					int q = getQuant(temp.getQuantity(),this.usrIn);
 					temp.subQuant(q);
 					this.writeAudio();
