@@ -87,7 +87,7 @@ public class ShoppingCart extends User{
 		String[] temp = this.getContent();//dumps the content of the cart into a temporary string array
 		for (int i = 0;i<temp.length;i++){//iterates through the strings in the temp array
 			String name = temp[i].split(",")[1].trim();//extract the name of the item from the string
-			if (itm.getName() == name){//if the extracted name matches the name of the item we are looking for
+			if (itm.getName().equals(name)){//if the extracted name matches the name of the item we are looking for
 				return i;//return the index of the item in the shopping cart
 			}
 		}
