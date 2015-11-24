@@ -392,16 +392,17 @@ public class UserInterface {
 			PrintStream cd = new PrintStream(new File("CDs.txt"));
 			PrintStream mp3 = new PrintStream(new File("MP3.txt"));
 			
-			for (Audio a:this.audioProducts){
-				if (a.getType().equals("CD")){
-					cd.println(a.getInfo());
-				}else{
-					mp3.println(a.getInfo());
+			for (Audio a:this.audioProducts){//iterates through the audio products
+				if (a.getType().equals("CD")){//if type is CD
+					cd.println(a.getInfo());//write into the CD.txt file
+				}else{//otherwise it must be an MP3
+					mp3.println(a.getInfo());//write into the MP3.txt file
 				}
 			}
+			//close the PrintStreams
 			cd.close();
 			mp3.close();
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) {//This block should not be reached unless an access error has occured
 			e.printStackTrace();
 		}
 	}
@@ -411,8 +412,8 @@ public class UserInterface {
 	//The first element is the price, the second is the environmental fee(2% , rounded down)
 	//and the third element is the shipping(10%, rounded down)
 	public int[] getPriceInfo(String name){
-		int[] results = {0,0,0};
-		for (Readable r: this.readables){
+		int[] results = {0,0,0};//3 slot for the return, 0 is price, 1 is environmental tax,2 is shipping
+		for (Readable r: this.readables){//iterates through readables
 			if (r.getName().equals(name)){
 				results[0] = r.getPrice();
 				if (r.getType().equals("Book")){
