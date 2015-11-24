@@ -2,96 +2,98 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class UserInterface {
-	private ArrayList<Readable> readables;
-	private ArrayList<Audio> audioProducts;
-	private int currentPage;
-	private ShoppingCart activeUser;
+	private ArrayList<Readable> readables; //Array that stores all readables
+	private ArrayList<Audio> audioProducts; //Array that store all audio products
+	private int currentPage; //the state variable for the current page
+	private ShoppingCart activeUser; //this is the shopping cart of the user
 	Scanner usrIn;
 	//User Input Scanner
 
 	
 	public UserInterface(){
+		//Initialize variables
 		this.usrIn = new Scanner(System.in);
 		this.readables = new ArrayList<Readable>();
 		this.audioProducts = new ArrayList<Audio>();
 		this.init();
 	}
 	public void init(){
-		this.getReadables();
-		this.getAudioProducts();
-		this.changeCurrentPage(1);
+		//calls the initialization methods
+		this.getReadables();//loads readables
+		this.getAudioProducts();//loads audio
+		this.changeCurrentPage(1);//set the page to page 1
 	}
 	public void getCurrentPage(){
-		String inp;
-		int choice;
+		String inp;// this is a general storage variable for user inputs
+		int choice;//this ia a general storage variable for the option the user selects
 		
 		if(this.currentPage == 1){
-			int[] op = {1,2};
-			choice = getInt(op,this.usrIn);
+			int[] op = {1,2}; //This is an Array of the valid options the user can enter
+			choice = getInt(op,this.usrIn);//calls the user query function with the current valid options and input scanner
 			
-			if (choice == 1){
-				System.out.println("Please enter your username: ");
-				inp = this.usrIn.nextLine();
-				String usr = User.findUser(inp);
-				if (usr.equals("")){
-					this.changeCurrentPage(4);
-				}else if(usr.split(",").length>1){
-					System.out.println("Please enter your password: ");
-					inp = this.usrIn.nextLine();
-					if (!inp.equals(usr.split(",")[1])){
-						System.out.println("Invalid password. Access Denied \n Press Enter to Continue");
-						this.usrIn.nextLine(); //
-						this.changeCurrentPage(4);
-					}else{
-						this.activeUser = new ShoppingCart(usr.split(",")[0],usr.split(",")[1]);
-						this.changeCurrentPage(3);
+			if (choice == 1){//if the user chooses option 1
+				System.out.println("Please enter your username: ");//prompt for username
+				inp = this.usrIn.nextLine();//stores input in input storage variable
+				String usr = User.findUser(inp); //calls the static findUser method to see if user exists and if so gets user data as a comma seperated string
+				if (usr.equals("")){//if user is not found
+					this.changeCurrentPage(4);//redirect to the "No Access" page
+				}else if(usr.split(",").length>1){//if the user has a password (i.e. is an admin)
+					System.out.println("Please enter your password: ");//prompt for password
+					inp = this.usrIn.nextLine();//stores input in input variable
+					if (!inp.equals(usr.split(",")[1])){//if incorrect pasword is entered
+						System.out.println("Invalid password. Access Denied \n Press Enter to Continue"); //print error
+						this.usrIn.nextLine(); //waits for user to press enter
+						this.changeCurrentPage(4);//goes to NO Access page
+					}else{//if password is correct
+						this.activeUser = new ShoppingCart(usr.split(",")[0],usr.split(",")[1]);//loads shopping card object
+						this.changeCurrentPage(3);//goes to welcome page
 					}
-				}else{
-					this.activeUser = new ShoppingCart(usr.split(",")[0]);
-					this.changeCurrentPage(3);
+				}else{//if a regular user enters
+					this.activeUser = new ShoppingCart(usr.split(",")[0]);//loads shopping cart
+					this.changeCurrentPage(3);//go to welcome page (P3)
 				}
-			}else{
-				this.changeCurrentPage(2);
+			}else{//if the user wants to sign up
+				this.changeCurrentPage(2);//go to signup page (P2)
 			}
 			
-		}else if(this.currentPage == 2){
-			inp = this.usrIn.nextLine();
-			while(!User.findUser(inp).equals("")){
-				System.out.println("That username is already taken. Please try again,");
-				System.out.println("Choose your username:");
-				inp = this.usrIn.nextLine();
+		}else if(this.currentPage == 2){//Page 2 user interaction logic
+			inp = this.usrIn.nextLine();//stores the user name the user has choosen in inp (see the printed P2 in changeCurrentPage(2))
+			while(!User.findUser(inp).equals("")){//if the user exists
+				System.out.println("That username is already taken. Please try again,");//print error
+				System.out.println("Choose your username:");//ask again
+				inp = this.usrIn.nextLine();//sotre user input in inp
 			}
-			this.activeUser = new ShoppingCart(inp);
-			this.activeUser.writeUser();
-			System.out.println("Username successfully added. Press Enter to Continue.");
-			this.usrIn.nextLine();
-			this.changeCurrentPage(5);
+			this.activeUser = new ShoppingCart(inp);//makes a shopping cart for the user
+			this.activeUser.writeUser();//writes the new user to Users.txt
+			System.out.println("Username successfully added. Press Enter to Continue.");//prompt enter to continue
+			this.usrIn.nextLine();//waits for user to hit enter
+			this.changeCurrentPage(5);//go to page 5
 			
-		}else if(this.currentPage == 3){
-			usrIn.nextLine();
-			this.changeCurrentPage(5);	
-		}else if(this.currentPage == 4){
-			usrIn.nextLine();
-			this.changeCurrentPage(1);	
-		}else if(this.currentPage == 5){
-			int[] op = {1,2,3};
-			choice = getInt(op,this.usrIn);
-			if(choice == 1){
-				this.changeCurrentPage(6);
-			}else if(choice == 2){
-				this.changeCurrentPage(7);
-			}else {
-				this.changeCurrentPage(1);
+		}else if(this.currentPage == 3){//page 3 welcome page
+			usrIn.nextLine();// waits for user to hit enter
+			this.changeCurrentPage(5); //goes to next menu (page 5)
+		}else if(this.currentPage == 4){//page 4 no access page
+			usrIn.nextLine();//waits for user to hit enter
+			this.changeCurrentPage(1);//goes back to main menu (page 1)
+		}else if(this.currentPage == 5){//page 5 menu page
+			int[] op = {1,2,3};//array for valid user inputs
+			choice = getInt(op,this.usrIn);//query user input function called
+			if(choice == 1){//if user chooses option 1
+				this.changeCurrentPage(6);//go to page 6
+			}else if(choice == 2){//if user chooses option 2
+				this.changeCurrentPage(7);//go to page 7
+			}else {//the user must have choosen option 3
+				this.changeCurrentPage(1);//go to page 1
 			}
-		}else if(this.currentPage == 6){
-			int[] op = {1,2,-1};
-			choice = getInt(op,this.usrIn);
-			if(choice == 1){
-				this.changeCurrentPage(8);
-			}else if(choice == 2){
-				this.changeCurrentPage(9);
-			}else{
-				this.changeCurrentPage(5);
+		}else if(this.currentPage == 6){//page 6 logic
+			int[] op = {1,2,-1};//valid options array
+			choice = getInt(op,this.usrIn);//query user function
+			if(choice == 1){//if user choose readables (option 1)
+				this.changeCurrentPage(8);//go to readables page (page 8)
+			}else if(choice == 2){//if user choose audio (option 2)
+				this.changeCurrentPage(9);//go to audio products page (page 9)
+			}else{//otherwise the user must have choosen option -1
+				this.changeCurrentPage(5);//go back to previous menu (page 5)
 			}
 		}else if(this.currentPage == 7){
 			usrIn.nextLine();
