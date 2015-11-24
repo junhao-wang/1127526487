@@ -199,32 +199,38 @@ public class UserInterface {
 				System.out.println("Items shipped to: "+this.activeUser.getName());//prints item shipped to : [username]
 				System.out.println("Please press enter to continue");//ask to continue
 				usrIn.nextLine();//waits for user to hit enter
-			}else{
+			}else{//if the user said no to buying the items in cart
+				//ask if they would like to clear the cart
 				boolean clear = yesNo("Would you like to return the items in your shopping cart? [Yes/No]: ",this.usrIn);
-				if(clear){
-					for(String line: this.activeUser.getContent()){
-						String[] temp = line.split(",");
-						this.retItm(temp[1].trim(), Integer.parseInt(temp[3].trim()));
+				if(clear){//if they said yes to clearing the cart
+					for(String line: this.activeUser.getContent()){//for every line in the cart
+						String[] temp = line.split(",");//split the string to get the individual fields
+						this.retItm(temp[1].trim(), Integer.parseInt(temp[3].trim()));//calls the return item function
 					}
-					this.writeReadable();
-					this.writeAudio();
-					this.activeUser.clearCart();
-					System.out.println("Cart Returned! Have a nice day.");
+					this.writeReadable();//write the readables to their respective files
+					this.writeAudio();//writes the audio to their respective files
+					this.activeUser.clearCart();//clears the user's cart
+					System.out.println("Cart Returned! Have a nice day.");//prints message
+					System.out.println("Please press enter to exit");//ask to continue
+					usrIn.nextLine();//waits for user to hit enter
 					System.exit(0);
-				}else{
-					System.out.println("Have a nice day.");
+				}else{//if the user does not want to clear the cart
+					System.out.println("Have a nice day.");//prints message
+					System.out.println("Please press enter to continue");//ask to continue
+					usrIn.nextLine();//waits for user to hit enter
 					System.exit(0);
 				}
 			}
-		}else{
+		}else{//if an invalid page numer was somehow reached
 			System.out.println("ERROR: Invalid Page Number");
 		}	
 
 	}
-	
+	//This is a function that changes the state vaiable and prints the page
 	public void changeCurrentPage(int i){
-		this.currentPage = i;
-		clearPage();
+		this.currentPage = i;//sets current page state variable to i
+		clearPage();//prints a ton of "\n" s
+		//The print statements in the following block will not be commented as they simply print out the text of the page
 		if(this.currentPage == 1){
 			System.out.println("1.Sign in");//these are separate print statements for better code readability
 			System.out.println("2.Sign up");
@@ -253,11 +259,11 @@ public class UserInterface {
 			System.out.println();
 			System.out.println("Enter -1 to return to previous menu");
 		}else if(this.currentPage == 7){
-			for (String s:activeUser.getContent()){
-				System.out.println(s);
+			for (String s:activeUser.getContent()){//iterates through current user's shopping cart
+				System.out.println(s);//prints out the lines
 			}
 			System.out.println();
-			System.out.println("Enter -1 to return to previous menu");
+			System.out.println("Press enter to return to previous menu");
 		}else if(this.currentPage == 8){
 			System.out.println("Readables: ");
 			System.out.println();
