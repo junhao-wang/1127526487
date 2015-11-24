@@ -2,7 +2,7 @@
 *Name: Junhao Wang, Colin Vandenhof, Teshaun Murray
 *MacID: wangjh2, vandencm, murrayts
 *Student Number: 1215428, 1231644, 1227515
-*Description:
+*Description: ShoppingCart class is used to read and write to a particular User's shopping cart file, store their shopping cart to an array for use in the program, and add items and search for items in the cart.
 */
 
 import java.io.*;
@@ -50,8 +50,8 @@ public class ShoppingCart extends User{
 	//returns the static array representation of the contents of the shopping cart
 	public String[] getContent(){
 		if (this.content.size() == 0){//safety for empty arrays
-			String[] s = {};//return empty string array
-			return s;
+			String[] s = {};//initialize empty string array
+			return s;//return empty string array
 		}
 		return this.content.toArray(new String[this.content.size()]);//converts the content arraylist to a string[] array
 	}

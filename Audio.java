@@ -2,7 +2,7 @@
 *Name: Junhao Wang, Colin Vandenhof, Teshaun Murray
 *MacID: wangjh2, vandencm, murrayts
 *Student Number: 1215428, 1231644, 1227515
-*Description:
+*Description: Readable class has methods for getting information (price, type, quantity etc...) about the audio item.
 */
 
 public class Audio extends Item {

@@ -2,7 +2,7 @@
 *Name: Junhao Wang, Colin Vandenhof, Teshaun Murray
 *MacID: wangjh2, vandencm, murrayts
 *Student Number: 1215428, 1231644, 1227515
-*Description:
+*Description: UserInterface class is used control the flow of the program from one page to another, and print the approriate contents of each page.
 */
 
 import java.io.*;
@@ -13,8 +13,7 @@ public class UserInterface {
 	private ArrayList<Audio> audioProducts; //Array that store all audio products
 	private int currentPage; //the state variable for the current page
 	private ShoppingCart activeUser; //this is the shopping cart of the user
-	Scanner usrIn;
-	//User Input Scanner
+	Scanner usrIn; //User Input Scanner
 
 	
 	public UserInterface(){
