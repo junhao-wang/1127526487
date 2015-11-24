@@ -266,7 +266,7 @@ public class UserInterface {
 			System.out.println();
 			System.out.println("Enter -1 to return to previous menu");
 		}else if(this.currentPage == 7){
-			for (String s:activeUser.getContent()){//iterates through current user's shopping cart
+			for (String s:this.activeUser.getContent()){//iterates through current user's shopping cart
 				System.out.println(s);//prints out the lines
 			}
 			System.out.println();
