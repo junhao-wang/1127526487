@@ -5,7 +5,8 @@
 *Description: Item is an abstract class with abstract methods for getting information (price, type, quantity etc...) about the item. 
 */
 
-public abstract class Item { //Item class is abstract and cannot be instantiated
+//Item class is abstract and cannot be instantiated
+public abstract class Item { 
 	protected int price; //declare variable for price
 	protected int sNo; //declare variable for serial number
 	protected int quantity; //declare variable for quantity

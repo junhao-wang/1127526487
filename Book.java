@@ -5,7 +5,8 @@
 *Description:Book class has methods to return price and readable type.
 */
 
-public class Book extends Readable{ //class Book is a subclass of Readable
+//class Book is a subclass of Readable
+public class Book extends Readable{ 
 
 	public Book(int sNo, String name, String authorName, int price, int quantity) { 
 		super(sNo, name, authorName, price, quantity);//inherit constructors from Readable

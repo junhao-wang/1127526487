@@ -2,10 +2,11 @@
 *Name: Junhao Wang, Colin Vandenhof, Teshaun Murray
 *MacID: wangjh2, vandencm, murrayts
 *Student Number: 1215428, 1231644, 1227515
-*Description:CD class has methods to return price and audio type.
+*Description: CD class has methods to return price and audio type.
 */
 
-public class CD extends Audio { //class CD is a subclass of Audio
+//class CD is a subclass of Audio
+public class CD extends Audio { 
 
 	public CD(int sNo, String name, String artistName, int price, int quantity) {
 		super(sNo, name, artistName, price, quantity); //inherit constructors from Audio

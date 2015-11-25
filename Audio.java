@@ -5,9 +5,10 @@
 *Description: Readable class has methods for getting information (price, type, quantity etc...) about the audio item.
 */
 
+//Audio is a subclass of Item, representing CD and MP3
 public class Audio extends Item {
 	protected String artistName;
-	public Audio(int sNo,String name,String artistName,int price,int quantity ){
+	public Audio(int sNo,String name,String artistName,int price,int quantity ){ //constructor
 		/*
 		Initialize variables
 		*/
@@ -46,7 +47,7 @@ public class Audio extends Item {
 	public String getInfo() {
 		//outputs the string "sNo,name,artistName,price,quantity"
 		String s = String.valueOf(this.sNo) +","+this.name+","+this.artistName+","+String.valueOf(this.price)+","+String.valueOf(this.quantity);
-		return s;
+		return s; //return the string of info
 	}
 
 	@Override
@@ -55,9 +56,11 @@ public class Audio extends Item {
 		return null;
 	}
 
-	public void subQuant(int x){
-		//Changes the quantity
-		this.quantity = this.quantity - x;
+	public void subQuant(int x){ //method to decrease the quantity by x
+		this.quantity = this.quantity - x; //quantity decreases by x
+	}
+	public void addQuant(int x){ //method to increase the quantity by x
+		this.quantity=this.quantity+x; //quantity increases by x
 	}
 
 }

@@ -8,11 +8,13 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+//class User  allows for an object representing the active user to be instantiated.
 public class User {
 	
 	private String username;//the username
 	private String password;// the password, if applicable
-	private boolean admin;//if the user is an admin
+	protected boolean admin;//if the user is an admin
 	
 	//constructor for admin user (not used)
 	public User(String name,String pwd){
@@ -88,7 +90,7 @@ public class User {
 		}
 	}
 	
-	//Originally a function to change the admin's password, never implemented
+	//This is the function to change the password for the ADMIN user.
 	public void changePass(Scanner input){
 		//if this account is not an admin account
 		if(!this.admin){
@@ -106,12 +108,14 @@ public class User {
 					inp = input.nextLine();//stores input
 					System.out.println("Please confirm your new password: ");//asks for comfirm pass
 					inp2 = input.nextLine();//stores input
-					if (inp.equals(inp2)){//compares the two, if they are the same
+					if (inp.equals(inp2)&&!inp.trim().equals("")){//compares the two, if they are the same
 						this.password = inp;//change pass
 						this.writeUser(); //updates user
 						System.out.println("Password has been changed.");//success message
 						break;//break loop
-					}else{//if new pass and confirm  does not match
+					}else if (inp.equals("")){
+						System.out.println("No blank passwords, please try again."); //print error
+					} else{//if new pass and confirm  does not match
 						System.out.println("Passwords do not match, please try again.");//print error
 						continue;//keep trying
 					}

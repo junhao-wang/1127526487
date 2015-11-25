@@ -5,7 +5,8 @@
 *Description: Readable class has methods for getting information (price, type, quantity etc...) about the readable item.
 */
 
-public class Readable extends Item{ //Readable is a subclass of Item
+//Readable is a subclass of Item, representing Books and eBooks
+public class Readable extends Item{ 
 	protected String authorName; //declare authorName instance variable
 	public String getInfo(){ //getter method that returns sNo, Name, Author etc... in a String
 		String s = String.valueOf(this.sNo) +","+this.name+","+this.authorName+","+String.valueOf(this.price)+","+String.valueOf(this.quantity); //initialize String
@@ -46,8 +47,12 @@ public class Readable extends Item{ //Readable is a subclass of Item
 	public void subQuant(int x){ //method to reduce quantity by x
 		this.quantity = this.quantity - x; //quantity decreases by x
 	}
+	
+	public void addQuant(int x){ //method to increase quantity by x
+		this.quantity= this.quantity+x; //quantity increases by x
+	}
 	public String getType() { //return Type
 		// TODO Auto-generated method stub
-		return null; //will be overridden so returns null.
+		return null; //will be overridden by eBook and Book classes so returns null.
 	}
 }

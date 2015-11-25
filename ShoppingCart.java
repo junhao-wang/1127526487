@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class ShoppingCart extends User{
 	
 	private ArrayList<String> content;
-	//constructor for admins (never used)
+	//constructor for admins
 	public ShoppingCart(String usr,String pwd){
 		super(usr,pwd);//calls constructor for user with username and password
 		String fileName = "Cart_"+usr+".txt";//computes the name of the shopping cart file

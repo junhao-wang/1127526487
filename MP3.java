@@ -5,7 +5,8 @@
 *Description: MP3 class has methods to return price and audio type.
 */
 
-public class MP3 extends Audio { //MP3 class is a subset of Audio
+//MP3 class is a subset of Audio
+public class MP3 extends Audio { 
 
 	public MP3(int sNo, String name, String artistName, int price, int quantity) {
 		super(sNo, name, artistName, price, quantity); //inherit the Audio constructors
